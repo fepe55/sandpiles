@@ -1,5 +1,14 @@
 # coding=utf-8
 import random
+import pygame
+
+
+class pycolors:
+    BLACK = pygame.Color(0, 0, 0)
+    WHITE = pygame.Color(255, 255, 255, 45)
+    BLUE = pygame.Color(149, 202, 255)
+    PINK = pygame.Color(255, 192, 203)
+    RED = pygame.Color(237, 41, 57)
 
 
 class bcolors:
@@ -70,6 +79,31 @@ class Sandpiles:
 
         return random_sandpile
 
+    def pygame_print(self, s):
+        pygame.init()
+        CELL_SIZE = 2
+        screen_x = self.GRID_SIZE * CELL_SIZE
+        screen_y = self.GRID_SIZE * CELL_SIZE
+        screen = pygame.display.set_mode((screen_x, screen_y))
+        # screen.fill(pycolors.BLACK)
+        # clock = pygame.time.Clock()
+        # FPS = 50
+        # clock.tick(FPS)
+        colors = {
+            0: pycolors.BLUE,
+            1: pycolors.WHITE,
+            2: pycolors.PINK,
+            3: pycolors.RED,
+        }
+
+        for x, row in enumerate(s):
+            for y, element in enumerate(row):
+                color = colors[element]
+                center_point = (x * CELL_SIZE, y * CELL_SIZE)
+                radius = CELL_SIZE
+                pygame.draw.circle(screen, color, center_point, radius, 0)
+        pygame.display.flip()
+
     def normal_print(self, s):
         for row in s:
             print(row)
@@ -130,6 +164,6 @@ class Sandpiles:
 if __name__ == '__main__':
     sandpiles = Sandpiles(100)
     result = sandpiles.add(sandpiles.ZERO, sandpiles.bigpile(10000))
-    sandpiles.color_print(result)
+    # sandpiles.color_print(result)
     # sandpiles.normal_print(result)
-    print()
+    sandpiles.pygame_print(result)
