@@ -28,9 +28,9 @@ class Sandpiles:
 
     def _GENERATOR(self, number):
         r = []
-        for i in xrange(self.GRID_SIZE):
+        for i in range(self.GRID_SIZE):
             m = []
-            for j in xrange(self.GRID_SIZE):
+            for j in range(self.GRID_SIZE):
                 m.append(number)
             r.append(m)
         return r
@@ -57,22 +57,22 @@ class Sandpiles:
 
     def bigpile(self, size=100):
         big_pile = self.ZERO
-        middle = self.GRID_SIZE / 2
+        middle = self.GRID_SIZE // 2
         big_pile[middle][middle] = size
         return big_pile
 
     @property
     def RANDOM(self):
         random_sandpile = self.ZERO
-        for row in xrange(self.GRID_SIZE):
-            for column in xrange(self.GRID_SIZE):
+        for row in range(self.GRID_SIZE):
+            for column in range(self.GRID_SIZE):
                 random_sandpile[row][column] = random.randint(0, 3)
 
         return random_sandpile
 
     def normal_print(self, s):
         for row in s:
-            print row
+            print(row)
 
     def color_print(self, s):
         for row in s:
@@ -87,8 +87,8 @@ class Sandpiles:
                 if element == 3:
                     color = bcolors.FAIL
                 row_to_print += color + u"\u2588"
-            print row_to_print
-        print bcolors.ENDC
+            print(row_to_print)
+        print(bcolors.ENDC)
 
     # When adding, you add cell by cell. If a cell ends up with a number bigger
     # than 3, then it 'topples', meaning it loses a grain of salt for each of
@@ -100,8 +100,8 @@ class Sandpiles:
     # it
     def add(self, s1, s2):
         r = self.ZERO
-        for row in xrange(self.GRID_SIZE):
-            for column in xrange(self.GRID_SIZE):
+        for row in range(self.GRID_SIZE):
+            for column in range(self.GRID_SIZE):
                 r[row][column] = s1[row][column] + s2[row][column]
 
         return self.handle_toppling(r)
@@ -110,8 +110,8 @@ class Sandpiles:
         toppling = True
         while toppling:
             toppling = False
-            for row in xrange(self.GRID_SIZE):
-                for column in xrange(self.GRID_SIZE):
+            for row in range(self.GRID_SIZE):
+                for column in range(self.GRID_SIZE):
                     if r[row][column] > 3:
                         toppling = True
                         r[row][column] -= 4
@@ -126,8 +126,10 @@ class Sandpiles:
 
         return r
 
+
 if __name__ == '__main__':
     sandpiles = Sandpiles(100)
     result = sandpiles.add(sandpiles.ZERO, sandpiles.bigpile(10000))
     sandpiles.color_print(result)
-    print
+    # sandpiles.normal_print(result)
+    print()
